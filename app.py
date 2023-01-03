@@ -8,8 +8,13 @@ user_input = input("Enter city: ")
 weather_data = requests.get(
     f"https://api.openweathermap.org/data/2.5/weather?q={user_input}&units=imperial&APPID={api_key}")
 
+#error handling
+if weather_data.json()['cod'] == '404':
+    print("No city found")
+else:
 #display weather data
-weather = weather_data.json()['weather'][0]['main']
-temp = weather_data.json()['main']['temp']
+    weather = weather_data.json()['weather'][0]['main']
+    temp = round(weather_data.json()['main']['temp'])
 
-print(weather, temp)
+    print(f"The weather in {user_input} is: {weather}")
+    print(f"The temperature in {user_input} is: {temp}ºF")
